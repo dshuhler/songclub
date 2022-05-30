@@ -27,24 +27,9 @@ public class MainController {
     @Value("${welcome.message}")
     private String message;
 
-    private List<String> tasks = Arrays.asList("a", "b", "c", "d", "e", "f", "g");
-
     @GetMapping("/")
     public String main(Model model) {
-        model.addAttribute("message", message);
-        model.addAttribute("tasks", tasks);
-
         return "index"; //view
-    }
-
-    @GetMapping("/hello")
-    public String mainWithParam(
-            @RequestParam(name = "name", required = false, defaultValue = "")
-                    String name, Model model) {
-
-        model.addAttribute("message", name);
-
-        return "index";
     }
 
     @PostMapping("/start")
