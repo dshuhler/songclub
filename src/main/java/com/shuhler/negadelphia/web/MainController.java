@@ -42,7 +42,7 @@ public class MainController {
     @PostMapping("/stop")
     public String stop(Model model) {
         logger.warn("Stopping...");
-
+        jobRunner.stopAll();
         return "index";
     }
 

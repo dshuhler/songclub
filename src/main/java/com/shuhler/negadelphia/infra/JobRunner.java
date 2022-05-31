@@ -1,6 +1,5 @@
 package com.shuhler.negadelphia.infra;
 
-import com.shuhler.negadelphia.web.MainController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Async;
@@ -9,13 +8,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class JobRunner {
 
-    Logger logger = LoggerFactory.getLogger(JobRunner.class);
+    private Logger logger = LoggerFactory.getLogger(JobRunner.class);
 
+    private boolean allStop;
 
     @Async
     public void doTestRun() {
+        allStop = false;
 
-        while (true) {
+        while (!allStop) {
             logger.warn("Doing a test run!" + Thread.currentThread().getName());
             try {
                 Thread.sleep(1000);
@@ -25,4 +26,7 @@ public class JobRunner {
         }
     }
 
+    public void stopAll() {
+        allStop = true;
+    }
 }
