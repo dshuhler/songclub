@@ -16,6 +16,8 @@
 
 <main role="main" class="container">
 
+  <h3 th:text="'Active profile: ' + ${profile_name}"></h3>
+
   <form action="#" th:action="@{/start}" method="post">
     <p><input type="submit" value="START" /></p>
   </form>

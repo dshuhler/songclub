@@ -24,12 +24,14 @@ public class MainController {
 
     Logger logger = LoggerFactory.getLogger(MainController.class);
 
-    @Value("${welcome.message}")
-    private String message;
+    @Value("${profile.name}")
+    private String profileName;
 
     @GetMapping("/")
     public String main(Model model) {
-        return "index"; //view
+        logger.info("profname:" + profileName);
+        model.addAttribute("profile_name", profileName);
+        return "index";
     }
 
     @PostMapping("/start")
