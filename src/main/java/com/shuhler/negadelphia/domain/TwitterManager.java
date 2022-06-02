@@ -1,35 +1,45 @@
 package com.shuhler.negadelphia.domain;
 
+import com.shuhler.negadelphia.web.MainController;
 import com.twitter.clientlib.ApiException;
 import com.twitter.clientlib.TwitterCredentialsOAuth2;
 import com.twitter.clientlib.api.TwitterApi;
 import com.twitter.clientlib.model.ResourceUnauthorizedProblem;
 import com.twitter.clientlib.model.SingleTweetLookupResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.util.HashSet;
 import java.util.Set;
 
 @Component
 public class TwitterManager {
 
-    @Value("${twitter.apikey}")
-    private String apikey;
+    private Logger logger = LoggerFactory.getLogger(TwitterManager.class);
 
-    @Value("${twitter.apisecret}")
-    private String apisecret;
+    private TwitterProperties twitterProperties;
 
-    @Value("${twitter.bearertoken}")
-    private String bearertoken;
+    private TwitterApi apiInstance = new TwitterApi();
+
+
+    @Autowired
+    public TwitterManager(TwitterProperties twitterProperties) {
+        this.twitterProperties = twitterProperties;
+    }
+
+    @PostConstruct
+    private void initializeTwitterApi() {
+        TwitterCredentialsOAuth2 credentials = new TwitterCredentialsOAuth2(twitterProperties.getApikey(),
+                twitterProperties.getApisecret(), twitterProperties.getBearertoken(), null);
+        apiInstance.setTwitterCredentials(credentials);
+    }
+
 
     public void test() {
-
-        TwitterApi apiInstance = new TwitterApi();
-        TwitterCredentialsOAuth2 credentials =
-                new TwitterCredentialsOAuth2(apikey, apisecret, bearertoken, null);
-
-        apiInstance.setTwitterCredentials(credentials);
 
         Set<String> tweetFields = new HashSet<>();
         tweetFields.add("author_id");
