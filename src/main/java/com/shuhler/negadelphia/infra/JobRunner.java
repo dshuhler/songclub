@@ -1,7 +1,9 @@
 package com.shuhler.negadelphia.infra;
 
+import com.shuhler.negadelphia.domain.TwitterManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
@@ -11,6 +13,13 @@ public class JobRunner {
     private Logger logger = LoggerFactory.getLogger(JobRunner.class);
 
     private boolean allStop;
+
+    private TwitterManager twitterManager;
+
+    @Autowired
+    public JobRunner(TwitterManager twitterManager) {
+        this.twitterManager = twitterManager;
+    }
 
     @Async
     public void doTestRun() {
@@ -27,6 +36,7 @@ public class JobRunner {
     }
 
     public void stopAll() {
+        twitterManager.test();
         allStop = true;
     }
 }
