@@ -1,15 +1,13 @@
 package com.shuhler.negadelphia.domain;
 
-import com.shuhler.negadelphia.web.MainController;
 import com.twitter.clientlib.ApiException;
 import com.twitter.clientlib.TwitterCredentialsOAuth2;
 import com.twitter.clientlib.api.TwitterApi;
-import com.twitter.clientlib.model.ResourceUnauthorizedProblem;
-import com.twitter.clientlib.model.SingleTweetLookupResponse;
+import com.twitter.clientlib.model.Tweet;
+import com.twitter.clientlib.model.TweetSearchResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -47,20 +45,15 @@ public class TwitterManager {
         tweetFields.add("created_at");
 
         try {
-            // findTweetById
-            SingleTweetLookupResponse result = apiInstance.tweets().findTweetById("20", null, tweetFields, null , null, null, null);
-            if(result.getErrors() != null && result.getErrors().size() > 0) {
-                System.out.println("Error:");
 
-                result.getErrors().forEach(e -> {
-                    System.out.println(e.toString());
-                    if (e instanceof ResourceUnauthorizedProblem) {
-                        System.out.println(((ResourceUnauthorizedProblem) e).getTitle() + " " + ((ResourceUnauthorizedProblem) e).getDetail());
-                    }
-                });
-            } else {
-                System.out.println("findTweetById - Tweet Text: " + result.toString());
+
+            TweetSearchResponse tsResponse = apiInstance.tweets().tweetsRecentSearch("eagles", null, null, null, null, null, null, null, null, null, tweetFields, null, null, null, null);
+
+            for (Tweet tweet : tsResponse.getData()) {
+                logger.info(tweet.toString());
             }
+
+
         } catch (ApiException e) {
             System.err.println("Status code: " + e.getCode());
             System.err.println("Reason: " + e.getResponseBody());
