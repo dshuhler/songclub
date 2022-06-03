@@ -44,13 +44,16 @@ public class TwitterManager {
         tweetFields.add("id");
         tweetFields.add("created_at");
 
+        String query = "Eagles lang:en";
+
         try {
 
 
-            TweetSearchResponse tsResponse = apiInstance.tweets().tweetsRecentSearch("eagles", null, null, null, null, null, null, null, null, null, tweetFields, null, null, null, null);
+            TweetSearchResponse tsResponse = apiInstance.tweets().tweetsRecentSearch(query, null, null, null, null, null, null, null, null, null, tweetFields, null, null, null, null);
 
             for (Tweet tweet : tsResponse.getData()) {
-                logger.info(tweet.toString());
+
+                logger.info(tweet.getText());
             }
 
 
