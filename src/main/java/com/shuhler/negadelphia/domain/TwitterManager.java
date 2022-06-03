@@ -43,13 +43,19 @@ public class TwitterManager {
         tweetFields.add("author_id");
         tweetFields.add("id");
         tweetFields.add("created_at");
+        tweetFields.add("context_annotations");
+        tweetFields.add("entities");
+
+
+
+        String eaglesContext = "context:12.689566314990436352";
 
         String query = "Eagles lang:en";
 
         try {
 
 
-            TweetSearchResponse tsResponse = apiInstance.tweets().tweetsRecentSearch(query, null, null, null, null, null, null, null, null, null, tweetFields, null, null, null, null);
+            TweetSearchResponse tsResponse = apiInstance.tweets().tweetsRecentSearch(eaglesContext, null, null, null, null, null, null, null, null, null, tweetFields, null, null, null, null);
 
             for (Tweet tweet : tsResponse.getData()) {
 
