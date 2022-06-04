@@ -1,0 +1,7 @@
+- You get 2 million pulls per month w/ "elevated" access
+- This is shared accross all environments for the same app
+- this is roughly
+  - 67k per day
+  - 2800 per hour
+  - 46 per minute
+- Philadelphia Eagles context ID: 12.689566314990436352
