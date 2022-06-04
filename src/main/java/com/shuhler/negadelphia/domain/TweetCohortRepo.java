@@ -3,19 +3,24 @@ package com.shuhler.negadelphia.domain;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.shuhler.negadelphia.domain.model.TweetCohort;
-import com.twitter.clientlib.TwitterCredentialsOAuth2;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.IOException;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 
 import static com.fasterxml.jackson.dataformat.yaml.YAMLGenerator.Feature.*;
 
 @Component
 public class TweetCohortRepo {
 
+    private Logger logger = LoggerFactory.getLogger(TweetCohortRepo.class);
     private ObjectMapper mapper;
+    private DateTimeFormatter sortableMinuteFormatter;
 
     @PostConstruct
     private void init() {
@@ -24,19 +29,23 @@ public class TweetCohortRepo {
                 .enable(INDENT_ARRAYS)
                 .build();
 
-
         mapper = new ObjectMapper(yamlFactory);
         mapper.findAndRegisterModules();
+
+        sortableMinuteFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH:mm")
+                .withZone(ZoneId.systemDefault());
     }
 
 
     public void saveToYaml(TweetCohort tweetCohort) {
-        String fileName = tweetCohort.getId() + "_" + tweetCohort.getTimeStamp();
+
+        String fileName = sortableMinuteFormatter.format(tweetCohort.getTimeStamp()) + ".yaml";
         String path = "src/test/resources/testoutput/" + fileName;
 
         try {
             mapper.writeValue(new File(path), tweetCohort);
         } catch (IOException e) {
+            logger.error("Error writing to YAML file");
             throw new RuntimeException(e);
         }
 

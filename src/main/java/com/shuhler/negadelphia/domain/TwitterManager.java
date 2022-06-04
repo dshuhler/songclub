@@ -63,6 +63,7 @@ public class TwitterManager {
             logger.error("Twitter API error. Status code: {}", e.getCode());
         }
 
+        tweetCohort.setTimeStampToNow();
         tweetCohortRepo.saveToYaml(tweetCohort);
 
     }
