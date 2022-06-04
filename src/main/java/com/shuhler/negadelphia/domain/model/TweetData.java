@@ -1,4 +1,4 @@
-package com.shuhler.negadelphia.domain;
+package com.shuhler.negadelphia.domain.model;
 
 import com.twitter.clientlib.model.Tweet;
 

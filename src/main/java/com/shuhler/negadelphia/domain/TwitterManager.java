@@ -1,5 +1,6 @@
 package com.shuhler.negadelphia.domain;
 
+import com.shuhler.negadelphia.domain.model.TweetCohort;
 import com.twitter.clientlib.ApiException;
 import com.twitter.clientlib.TwitterCredentialsOAuth2;
 import com.twitter.clientlib.api.TwitterApi;
@@ -20,13 +21,14 @@ public class TwitterManager {
     private Logger logger = LoggerFactory.getLogger(TwitterManager.class);
 
     private TwitterProperties twitterProperties;
+    private TweetCohortRepo tweetCohortRepo;
 
     private TwitterApi apiInstance = new TwitterApi();
 
-
     @Autowired
-    public TwitterManager(TwitterProperties twitterProperties) {
+    public TwitterManager(TwitterProperties twitterProperties, TweetCohortRepo tweetCohortRepo) {
         this.twitterProperties = twitterProperties;
+        this.tweetCohortRepo = tweetCohortRepo;
     }
 
     @PostConstruct
@@ -52,6 +54,8 @@ public class TwitterManager {
 
         String query = "Eagles lang:en";
 
+        TweetCohort tweetCohort = new TweetCohort("1");
+
         try {
 
 
@@ -60,6 +64,7 @@ public class TwitterManager {
             for (Tweet tweet : tsResponse.getData()) {
 
                 logger.info(tweet.getText());
+                tweetCohort.addTweet(tweet);
             }
 
 
@@ -69,6 +74,9 @@ public class TwitterManager {
             System.err.println("Response headers: " + e.getResponseHeaders());
             e.printStackTrace();
         }
+
+        tweetCohortRepo.saveTweetToFile(tweetCohort);
+
     }
 
 
