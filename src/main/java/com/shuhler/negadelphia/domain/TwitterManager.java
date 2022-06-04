@@ -48,12 +48,20 @@ public class TwitterManager {
         tweetFields.add("context_annotations");
         tweetFields.add("entities");
 
+        Set<String> userFields = new HashSet<>();
+        userFields.add("name");
+        userFields.add("user_name");
+
         String eaglesContext = "context:12.689566314990436352";
+
+        String excludeRetweets = "-is:retweet";
 
         TweetCohort tweetCohort = new TweetCohort("1");
 
+        String query = eaglesContext + " " + excludeRetweets;
         try {
-            TweetSearchResponse tsResponse = apiInstance.tweets().tweetsRecentSearch(eaglesContext, null, null, null, null, null, null, null, null, null, tweetFields, null, null, null, null);
+            TweetSearchResponse tsResponse = apiInstance.tweets().tweetsRecentSearch(query, null, null, null, null,
+                    null, null, null, null, null, tweetFields, null, null, null, null);
 
             for (Tweet tweet : tsResponse.getData()) {
                 tweetCohort.addTweet(tweet);

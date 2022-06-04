@@ -5,3 +5,5 @@
   - 2800 per hour
   - 46 per minute
 - Philadelphia Eagles context ID: 12.689566314990436352
+  - The "Recent Search" endpiont returns 100 tweets per request, chunked into 10 tweet pages.
+  - 
