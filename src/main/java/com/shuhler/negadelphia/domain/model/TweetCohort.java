@@ -1,6 +1,7 @@
 package com.shuhler.negadelphia.domain.model;
 
 import com.twitter.clientlib.model.Tweet;
+import com.twitter.clientlib.model.TweetSearchResponse;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -19,6 +20,21 @@ public class TweetCohort {
 
     public void addTweet(Tweet tweet) {
         tweetDataList.add(new TweetData(tweet));
+    }
+
+    public void addAllFromSearchResponse(TweetSearchResponse tsr) {
+
+        if (tsr.getData() == null) {
+            return;
+        }
+
+        for (int n = 0; n < tsr.getData().size(); n++) {
+            TweetData tweetData = new TweetData(tsr.getData().get(n));
+
+            String username = tsr.getIncludes().getUsers().get(n).getUsername();
+            tweetData.setUsername(username);
+            tweetDataList.add(tweetData);
+        }
     }
 
     public void setTimeStampToNow() {

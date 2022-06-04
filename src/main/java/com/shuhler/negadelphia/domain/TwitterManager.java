@@ -50,7 +50,10 @@ public class TwitterManager {
 
         Set<String> userFields = new HashSet<>();
         userFields.add("name");
-        userFields.add("user_name");
+        userFields.add("username");
+
+        Set<String> expansions = new HashSet<>();
+        expansions.add("author_id");
 
         String eaglesContext = "context:12.689566314990436352";
 
@@ -61,11 +64,15 @@ public class TwitterManager {
         String query = eaglesContext + " " + excludeRetweets;
         try {
             TweetSearchResponse tsResponse = apiInstance.tweets().tweetsRecentSearch(query, null, null, null, null,
-                    null, null, null, null, null, tweetFields, null, null, null, null);
+                    null, null, null, null, expansions, tweetFields, userFields, null, null, null);
 
-            for (Tweet tweet : tsResponse.getData()) {
-                tweetCohort.addTweet(tweet);
-            }
+            tweetCohort.addAllFromSearchResponse(tsResponse);
+
+
+//            for (Tweet tweet : tsResponse.getData()) {
+//
+//                tweetCohort.addTweet(tweet);
+//            }
 
         } catch (ApiException e) {
             logger.error("Twitter API error. Status code: {}", e.getCode());

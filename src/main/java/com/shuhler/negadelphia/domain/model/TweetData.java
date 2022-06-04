@@ -6,7 +6,7 @@ public class TweetData {
 
     private String id;
     private String text;
-
+    private String username;
 
     public TweetData(Tweet tweet) {
 
@@ -16,6 +16,14 @@ public class TweetData {
 
     public TweetData() {
 
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getUsername() {
+        return username;
     }
 
     public void setId(String id) {
