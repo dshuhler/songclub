@@ -48,37 +48,23 @@ public class TwitterManager {
         tweetFields.add("context_annotations");
         tweetFields.add("entities");
 
-
-
         String eaglesContext = "context:12.689566314990436352";
-
-        String query = "Eagles lang:en";
 
         TweetCohort tweetCohort = new TweetCohort("1");
 
         try {
-
-
             TweetSearchResponse tsResponse = apiInstance.tweets().tweetsRecentSearch(eaglesContext, null, null, null, null, null, null, null, null, null, tweetFields, null, null, null, null);
 
             for (Tweet tweet : tsResponse.getData()) {
-
-                logger.info(tweet.getText());
                 tweetCohort.addTweet(tweet);
             }
 
-
         } catch (ApiException e) {
-            System.err.println("Status code: " + e.getCode());
-            System.err.println("Reason: " + e.getResponseBody());
-            System.err.println("Response headers: " + e.getResponseHeaders());
-            e.printStackTrace();
+            logger.error("Twitter API error. Status code: {}", e.getCode());
         }
 
         tweetCohortRepo.saveTweetToFile(tweetCohort);
 
     }
-
-
 
 }
