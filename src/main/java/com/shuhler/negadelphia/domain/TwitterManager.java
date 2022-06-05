@@ -52,10 +52,10 @@ public class TwitterManager {
 
         tweetCohort.addAllFromSearchResponse(tsResponse);
 
-//        if (tsResponse.getMeta().getNextToken() != null) {
-//            TweetSearchResponse nextPageTsr = standardRecentSearch(query);
-//            tweetCohort.addAllFromSearchResponse(nextPageTsr);
-//        }
+        if (tsResponse.getMeta().getNextToken() != null) {
+            TweetSearchResponse nextPageTsr = searchByToken(query, tsResponse.getMeta().getNextToken());
+            tweetCohort.addAllFromSearchResponse(nextPageTsr);
+        }
 
 
         tweetCohort.setTimeStampToNow();
@@ -89,7 +89,7 @@ public class TwitterManager {
         return null;
     }
 
-    private TweetSearchResponse searchByToken(String token) {
+    private TweetSearchResponse searchByToken(String query, String token) {
 
         Set<String> tweetFields = new HashSet<>();
         tweetFields.add("author_id");
@@ -107,7 +107,7 @@ public class TwitterManager {
 
 
         try {
-            return apiInstance.tweets().tweetsRecentSearch(null, null, null, null, null,
+            return apiInstance.tweets().tweetsRecentSearch(query, null, null, null, null,
                     null, null, token, null, expansions, tweetFields, userFields, null, null, null);
 
         } catch (ApiException e) {
