@@ -28,14 +28,8 @@ public class TweetCohort {
             return;
         }
 
-        for (int n = 0; n < tsr.getData().size(); n++) {
-            TweetData tweetData = new TweetData(tsr.getData().get(n));
-
-
-            String username = tsr.getIncludes().getUsers().get(n).getUsername();
-            tweetData.setUsername(username);
-            tweetDataList.add(tweetData);
-        }
+        ResponseExtractor responseExtractor = new ResponseExtractor(tsr);
+        tweetDataList.addAll(responseExtractor.asTweetData());
     }
 
 

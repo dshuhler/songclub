@@ -52,6 +52,11 @@ public class TwitterManager {
 
         tweetCohort.addAllFromSearchResponse(tsResponse);
 
+//        if (tsResponse.getMeta().getNextToken() != null) {
+//            TweetSearchResponse nextPageTsr = standardRecentSearch(query);
+//            tweetCohort.addAllFromSearchResponse(nextPageTsr);
+//        }
+
 
         tweetCohort.setTimeStampToNow();
         tweetCohortRepo.saveToYaml(tweetCohort);
@@ -84,5 +89,31 @@ public class TwitterManager {
         return null;
     }
 
+    private TweetSearchResponse searchByToken(String token) {
+
+        Set<String> tweetFields = new HashSet<>();
+        tweetFields.add("author_id");
+        tweetFields.add("id");
+        tweetFields.add("created_at");
+        tweetFields.add("context_annotations");
+        tweetFields.add("entities");
+
+        Set<String> userFields = new HashSet<>();
+        userFields.add("name");
+        userFields.add("username");
+
+        Set<String> expansions = new HashSet<>();
+        expansions.add("author_id");
+
+
+        try {
+            return apiInstance.tweets().tweetsRecentSearch(null, null, null, null, null,
+                    null, null, token, null, expansions, tweetFields, userFields, null, null, null);
+
+        } catch (ApiException e) {
+            logger.error("Twitter API error. Status code: {}", e.getCode());
+        }
+        return null;
+    }
 
 }
