@@ -4,7 +4,6 @@ import com.twitter.clientlib.model.Tweet;
 import com.twitter.clientlib.model.TweetSearchResponse;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 

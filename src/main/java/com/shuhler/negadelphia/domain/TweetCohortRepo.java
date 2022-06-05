@@ -13,7 +13,8 @@ import java.io.IOException;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
-import static com.fasterxml.jackson.dataformat.yaml.YAMLGenerator.Feature.*;
+import static com.fasterxml.jackson.dataformat.yaml.YAMLGenerator.Feature.INDENT_ARRAYS;
+import static com.fasterxml.jackson.dataformat.yaml.YAMLGenerator.Feature.SPLIT_LINES;
 
 @Component
 public class TweetCohortRepo {

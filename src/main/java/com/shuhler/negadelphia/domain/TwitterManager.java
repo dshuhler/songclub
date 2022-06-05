@@ -1,10 +1,8 @@
 package com.shuhler.negadelphia.domain;
 
 import com.shuhler.negadelphia.domain.model.TweetCohort;
-import com.twitter.clientlib.ApiException;
 import com.twitter.clientlib.TwitterCredentialsOAuth2;
 import com.twitter.clientlib.api.TwitterApi;
-import com.twitter.clientlib.model.Tweet;
 import com.twitter.clientlib.model.TweetSearchResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.util.HashSet;
-import java.util.Set;
 
 @Component
 public class TwitterManager {
@@ -22,6 +18,7 @@ public class TwitterManager {
 
     private TwitterProperties twitterProperties;
     private TweetCohortRepo tweetCohortRepo;
+    private TwitterSearcher twitterSearcher;
 
     private TwitterApi apiInstance = new TwitterApi();
 
@@ -36,6 +33,7 @@ public class TwitterManager {
         TwitterCredentialsOAuth2 credentials = new TwitterCredentialsOAuth2(twitterProperties.getApikey(),
                 twitterProperties.getApisecret(), twitterProperties.getBearertoken(), null);
         apiInstance.setTwitterCredentials(credentials);
+        twitterSearcher = new TwitterSearcher(apiInstance);
     }
 
 
@@ -48,12 +46,12 @@ public class TwitterManager {
 
         String query = eaglesContext + " " + excludeRetweets;
 
-        TweetSearchResponse tsResponse = standardRecentSearch(query);
+        TweetSearchResponse tsResponse = twitterSearcher.standardRecentSearch(query);
 
         tweetCohort.addAllFromSearchResponse(tsResponse);
 
         if (tsResponse.getMeta().getNextToken() != null) {
-            TweetSearchResponse nextPageTsr = searchByToken(query, tsResponse.getMeta().getNextToken());
+            TweetSearchResponse nextPageTsr = twitterSearcher.searchByToken(query, tsResponse.getMeta().getNextToken());
             tweetCohort.addAllFromSearchResponse(nextPageTsr);
         }
 
@@ -62,58 +60,5 @@ public class TwitterManager {
         tweetCohortRepo.saveToYaml(tweetCohort);
     }
 
-    private TweetSearchResponse standardRecentSearch(String query) {
-
-        Set<String> tweetFields = new HashSet<>();
-        tweetFields.add("author_id");
-        tweetFields.add("id");
-        tweetFields.add("created_at");
-        tweetFields.add("context_annotations");
-        tweetFields.add("entities");
-
-        Set<String> userFields = new HashSet<>();
-        userFields.add("name");
-        userFields.add("username");
-
-        Set<String> expansions = new HashSet<>();
-        expansions.add("author_id");
-
-
-        try {
-        return apiInstance.tweets().tweetsRecentSearch(query, null, null, null, null,
-                null, null, null, null, expansions, tweetFields, userFields, null, null, null);
-
-        } catch (ApiException e) {
-            logger.error("Twitter API error. Status code: {}", e.getCode());
-        }
-        return null;
-    }
-
-    private TweetSearchResponse searchByToken(String query, String token) {
-
-        Set<String> tweetFields = new HashSet<>();
-        tweetFields.add("author_id");
-        tweetFields.add("id");
-        tweetFields.add("created_at");
-        tweetFields.add("context_annotations");
-        tweetFields.add("entities");
-
-        Set<String> userFields = new HashSet<>();
-        userFields.add("name");
-        userFields.add("username");
-
-        Set<String> expansions = new HashSet<>();
-        expansions.add("author_id");
-
-
-        try {
-            return apiInstance.tweets().tweetsRecentSearch(query, null, null, null, null,
-                    null, null, token, null, expansions, tweetFields, userFields, null, null, null);
-
-        } catch (ApiException e) {
-            logger.error("Twitter API error. Status code: {}", e.getCode());
-        }
-        return null;
-    }
 
 }
