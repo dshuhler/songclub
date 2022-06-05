@@ -6,12 +6,14 @@ public class TweetData {
 
     private String id;
     private String text;
+    private String authorId;
     private String username;
 
     public TweetData(Tweet tweet) {
 
         id = tweet.getId();
         text = tweet.getText();
+        authorId = tweet.getAuthorId();
     }
 
     public TweetData() {
@@ -40,5 +42,13 @@ public class TweetData {
 
     public String getText() {
         return text;
+    }
+
+    public String getAuthorId() {
+        return authorId;
+    }
+
+    public void setAuthorId(String authorId) {
+        this.authorId = authorId;
     }
 }

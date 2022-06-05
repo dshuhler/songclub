@@ -31,16 +31,17 @@ public class TweetCohort {
         for (int n = 0; n < tsr.getData().size(); n++) {
             TweetData tweetData = new TweetData(tsr.getData().get(n));
 
+
             String username = tsr.getIncludes().getUsers().get(n).getUsername();
             tweetData.setUsername(username);
             tweetDataList.add(tweetData);
         }
     }
 
+
     public void setTimeStampToNow() {
         timeStamp = Instant.now();
     }
-
 
     public String getId() {
         return id;
@@ -53,8 +54,5 @@ public class TweetCohort {
     public List<TweetData> getTweetDataList() {
         return tweetDataList;
     }
-
-
-
 
 }

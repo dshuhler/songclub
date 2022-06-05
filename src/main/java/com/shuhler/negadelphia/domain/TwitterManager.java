@@ -41,6 +41,24 @@ public class TwitterManager {
 
     public void test() {
 
+        String eaglesContext = "context:12.689566314990436352";
+        String excludeRetweets = "-is:retweet";
+
+        TweetCohort tweetCohort = new TweetCohort("1");
+
+        String query = eaglesContext + " " + excludeRetweets;
+
+        TweetSearchResponse tsResponse = standardRecentSearch(query);
+
+        tweetCohort.addAllFromSearchResponse(tsResponse);
+
+
+        tweetCohort.setTimeStampToNow();
+        tweetCohortRepo.saveToYaml(tweetCohort);
+    }
+
+    private TweetSearchResponse standardRecentSearch(String query) {
+
         Set<String> tweetFields = new HashSet<>();
         tweetFields.add("author_id");
         tweetFields.add("id");
@@ -55,32 +73,16 @@ public class TwitterManager {
         Set<String> expansions = new HashSet<>();
         expansions.add("author_id");
 
-        String eaglesContext = "context:12.689566314990436352";
 
-        String excludeRetweets = "-is:retweet";
-
-        TweetCohort tweetCohort = new TweetCohort("1");
-
-        String query = eaglesContext + " " + excludeRetweets;
         try {
-            TweetSearchResponse tsResponse = apiInstance.tweets().tweetsRecentSearch(query, null, null, null, null,
-                    null, null, null, null, expansions, tweetFields, userFields, null, null, null);
-
-            tweetCohort.addAllFromSearchResponse(tsResponse);
-
-
-//            for (Tweet tweet : tsResponse.getData()) {
-//
-//                tweetCohort.addTweet(tweet);
-//            }
+        return apiInstance.tweets().tweetsRecentSearch(query, null, null, null, null,
+                null, null, null, null, expansions, tweetFields, userFields, null, null, null);
 
         } catch (ApiException e) {
             logger.error("Twitter API error. Status code: {}", e.getCode());
         }
-
-        tweetCohort.setTimeStampToNow();
-        tweetCohortRepo.saveToYaml(tweetCohort);
-
+        return null;
     }
+
 
 }
