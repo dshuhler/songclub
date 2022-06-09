@@ -14,7 +14,10 @@ public class CussClassifier {
 
     // raw count of curse occurances
     public int classify(String text) {
-        List<String> words = Splitter.on(' ').splitToList(text.toLowerCase());
+
+        String noPunctuationText = text.replaceAll("\\p{Punct}", "");
+
+        List<String> words = Splitter.on(' ').splitToList(noPunctuationText.toLowerCase());
 
         int occurances = 0;
         for (String word: words) {
