@@ -1,6 +1,5 @@
 package com.shuhler.negadelphia;
 
-import com.shuhler.negadelphia.domain.model.TweetData;
 import com.shuhler.negadelphia.domain.TweetCohortRepo;
 import com.shuhler.negadelphia.domain.TwitterManager;
 import org.junit.jupiter.api.Test;

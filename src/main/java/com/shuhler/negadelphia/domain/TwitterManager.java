@@ -1,6 +1,6 @@
 package com.shuhler.negadelphia.domain;
 
-import com.shuhler.negadelphia.domain.model.TweetCohort;
+import com.shuhler.negadelphia.domain.twitter.TweetCohort;
 import com.twitter.clientlib.TwitterCredentialsOAuth2;
 import com.twitter.clientlib.api.TwitterApi;
 import com.twitter.clientlib.model.TweetSearchResponse;

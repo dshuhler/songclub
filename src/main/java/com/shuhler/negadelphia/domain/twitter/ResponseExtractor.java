@@ -1,4 +1,4 @@
-package com.shuhler.negadelphia.domain.model;
+package com.shuhler.negadelphia.domain.twitter;
 
 import com.twitter.clientlib.model.TweetSearchResponse;
 import com.twitter.clientlib.model.User;
