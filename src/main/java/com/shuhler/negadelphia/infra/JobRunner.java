@@ -36,7 +36,7 @@ public class JobRunner {
     }
 
     public void stopAll() {
-        twitterManager.test();
+        twitterManager.pollForEaglesTweets();
         allStop = true;
     }
 }

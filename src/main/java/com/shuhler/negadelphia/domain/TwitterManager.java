@@ -37,7 +37,7 @@ public class TwitterManager {
     }
 
 
-    public void test() {
+    public void pollForEaglesTweets() {
 
         String eaglesContext = "context:12.689566314990436352";
         String excludeRetweets = "-is:retweet";
@@ -50,9 +50,28 @@ public class TwitterManager {
 
         tweetCohort.addAllFromSearchResponse(tsResponse);
 
-        if (tsResponse.getMeta().getNextToken() != null) {
-            TweetSearchResponse nextPageTsr = twitterSearcher.searchByToken(query, tsResponse.getMeta().getNextToken());
-            tweetCohort.addAllFromSearchResponse(nextPageTsr);
+
+        boolean hasMorePages = true;
+        if (tsResponse.getMeta() == null || tsResponse.getMeta().getNextToken() == null) {
+            hasMorePages = false;
+        }
+
+        int numPages = 1;
+        while (hasMorePages) {
+            logger.info("Querying for additional page number {}", numPages);
+            tsResponse = twitterSearcher.searchByToken(query, tsResponse.getMeta().getNextToken());
+            tweetCohort.addAllFromSearchResponse(tsResponse);
+            numPages++;
+
+
+            if (tsResponse.getMeta() == null || tsResponse.getMeta().getNextToken() == null) {
+                hasMorePages = false;
+            }
+
+            if (numPages > 10) {
+                break;
+            }
+
         }
 
 

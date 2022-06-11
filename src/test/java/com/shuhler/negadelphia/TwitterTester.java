@@ -18,12 +18,9 @@ public class TwitterTester {
     @Autowired
     private TwitterManager twitterManager;
 
-    @Autowired
-    private TweetCohortRepo tweetRepo;
-
     @Test
     void runTest() {
-        twitterManager.test();
+        twitterManager.pollForEaglesTweets();
     }
 
 
