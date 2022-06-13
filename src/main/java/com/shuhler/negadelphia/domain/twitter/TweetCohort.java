@@ -6,6 +6,8 @@ import com.twitter.clientlib.model.TweetSearchResponse;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 public class TweetCohort {
 
@@ -50,6 +52,13 @@ public class TweetCohort {
 
     public int numTweets() {
         return tweetDataList.size();
+    }
+
+    public String lastTweetId() {
+        TreeSet<String> orderedIds = tweetDataList.stream()
+                .map(TweetData::getId)
+                .collect(Collectors.toCollection(TreeSet::new));
+        return orderedIds.last();
     }
 
 }

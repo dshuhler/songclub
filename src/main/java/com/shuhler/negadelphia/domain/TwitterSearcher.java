@@ -26,6 +26,9 @@ public class TwitterSearcher {
 
     public TweetSearchResponse searchByToken(String query, String token) {
 
+        // Note: the API has a "nextToken" and a "paginationToken" with the same exact description
+        // You want to use nextToken. see: https://twittercommunity.com/t/why-does-timeline-use-pagination-token-while-search-uses-next-token/150963
+
         try {
             return apiInstance.tweets().tweetsRecentSearch(query, null, null, null, null,
                     MAX_RESULTS, null, token, null, expansions, tweetFields, userFields, null, null, null);

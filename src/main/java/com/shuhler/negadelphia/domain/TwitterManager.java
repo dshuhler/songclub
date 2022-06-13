@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.util.UUID;
 
 @Component
 public class TwitterManager {
@@ -42,7 +43,8 @@ public class TwitterManager {
         String eaglesContext = "context:12.689566314990436352";
         String excludeRetweets = "-is:retweet";
 
-        TweetCohort tweetCohort = new TweetCohort("1");
+        TweetCohort tweetCohort = new TweetCohort(UUID.randomUUID().toString());
+
 
         String query = eaglesContext + " " + excludeRetweets;
 
