@@ -2,18 +2,23 @@ package com.shuhler.negadelphia.domain.twitter;
 
 import com.twitter.clientlib.model.Tweet;
 
+import java.time.OffsetDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class TweetData {
 
     private String id;
     private String text;
     private String authorId;
     private String username;
+    private OffsetDateTime createdAt;
 
     public TweetData(Tweet tweet) {
 
         id = tweet.getId();
         text = tweet.getText();
         authorId = tweet.getAuthorId();
+        createdAt = tweet.getCreatedAt();
     }
 
     public TweetData() {
@@ -50,5 +55,9 @@ public class TweetData {
 
     public void setAuthorId(String authorId) {
         this.authorId = authorId;
+    }
+
+    public String getCreatedAt() {
+        return DateTimeFormatter.ofPattern("yyyy-MM-dd_HH:mm:ss").format(createdAt);
     }
 }
