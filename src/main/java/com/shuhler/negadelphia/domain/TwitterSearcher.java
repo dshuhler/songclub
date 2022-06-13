@@ -24,11 +24,11 @@ public class TwitterSearcher {
 
     public TweetSearchResponse searchByToken(String query, String token) {
 
-
+        int maxResults = 100;
 
         try {
             return apiInstance.tweets().tweetsRecentSearch(query, null, null, null, null,
-                    null, null, token, null, expansions, tweetFields, userFields, null, null, null);
+                    maxResults, null, token, null, expansions, tweetFields, userFields, null, null, null);
 
         } catch (ApiException e) {
             logger.error("Twitter API error. Status code: {}", e.getCode());
