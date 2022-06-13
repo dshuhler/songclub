@@ -45,6 +45,7 @@ public class TweetCohortRepo {
 
         try {
             mapper.writeValue(new File(path), tweetCohort);
+            logger.info("Wrote {} tweets to {}", tweetCohort.numTweets(), path);
         } catch (IOException e) {
             logger.error("Error writing to YAML file");
             throw new RuntimeException(e);

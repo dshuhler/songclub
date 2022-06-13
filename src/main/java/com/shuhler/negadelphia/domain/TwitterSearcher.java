@@ -10,6 +10,8 @@ import java.util.Set;
 
 public class TwitterSearcher {
 
+    private static int MAX_RESULTS = 100;
+
     private Logger logger = LoggerFactory.getLogger(TwitterSearcher.class);
 
     private TwitterApi apiInstance;
@@ -24,11 +26,9 @@ public class TwitterSearcher {
 
     public TweetSearchResponse searchByToken(String query, String token) {
 
-        int maxResults = 100;
-
         try {
             return apiInstance.tweets().tweetsRecentSearch(query, null, null, null, null,
-                    maxResults, null, token, null, expansions, tweetFields, userFields, null, null, null);
+                    MAX_RESULTS, null, token, null, expansions, tweetFields, userFields, null, null, null);
 
         } catch (ApiException e) {
             logger.error("Twitter API error. Status code: {}", e.getCode());
@@ -41,7 +41,7 @@ public class TwitterSearcher {
 
         try {
             return apiInstance.tweets().tweetsRecentSearch(query, null, null, null, null,
-                    null, null, null, null, expansions, tweetFields, userFields, null, null, null);
+                    MAX_RESULTS, null, null, null, expansions, tweetFields, userFields, null, null, null);
 
         } catch (ApiException e) {
             logger.error("Twitter API error. Status code: {}", e.getCode());

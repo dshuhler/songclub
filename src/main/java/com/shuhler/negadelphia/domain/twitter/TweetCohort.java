@@ -48,4 +48,8 @@ public class TweetCohort {
         return tweetDataList;
     }
 
+    public int numTweets() {
+        return tweetDataList.size();
+    }
+
 }

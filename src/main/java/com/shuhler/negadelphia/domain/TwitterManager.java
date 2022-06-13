@@ -68,7 +68,7 @@ public class TwitterManager {
                 hasMorePages = false;
             }
 
-            if (numPages > 10) {
+            if (numPages > 3) {
                 break;
             }
 
