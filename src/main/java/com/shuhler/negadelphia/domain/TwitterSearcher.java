@@ -26,7 +26,7 @@ public class TwitterSearcher {
         this.apiInstance = apiInstance;
     }
 
-    public TweetCohort search(String query, String sinceId) {
+    public TweetCohort search(String query, String sinceId, int maxPages) {
 
         // do initial query w/o token
         TweetSearchResponse tsResponse = standardRecentSearch(query);
@@ -51,7 +51,7 @@ public class TwitterSearcher {
                 hasMorePages = false;
             }
 
-            if (numPages > 3) {
+            if (numPages > maxPages) {
                 break;
             }
 

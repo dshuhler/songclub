@@ -46,7 +46,7 @@ public class TwitterManager {
 
         String query = eaglesContext + " " + excludeRetweets;
 
-        TweetCohort tweetCohort = twitterSearcher.search(query, null);
+        TweetCohort tweetCohort = twitterSearcher.search(query, null, 3);
 
         tweetCohortRepo.saveToYaml(tweetCohort);
     }
