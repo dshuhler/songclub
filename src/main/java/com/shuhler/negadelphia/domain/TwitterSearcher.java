@@ -1,5 +1,6 @@
 package com.shuhler.negadelphia.domain;
 
+import com.shuhler.negadelphia.domain.twitter.TweetCohort;
 import com.twitter.clientlib.ApiException;
 import com.twitter.clientlib.api.TwitterApi;
 import com.twitter.clientlib.model.TweetSearchResponse;
@@ -7,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Set;
+import java.util.UUID;
 
 public class TwitterSearcher {
 
@@ -23,6 +25,45 @@ public class TwitterSearcher {
     public TwitterSearcher(TwitterApi apiInstance) {
         this.apiInstance = apiInstance;
     }
+
+    public TweetCohort search(String query, String sinceId) {
+
+        // do initial query w/o token
+        TweetSearchResponse tsResponse = standardRecentSearch(query);
+
+        TweetCohort tweetCohort = new TweetCohort(UUID.randomUUID().toString());
+        tweetCohort.addAllFromSearchResponse(tsResponse);
+
+        boolean hasMorePages = true;
+        if (tsResponse.getMeta() == null || tsResponse.getMeta().getNextToken() == null) {
+            hasMorePages = false;
+        }
+
+        int numPages = 1;
+        while (hasMorePages) {
+            logger.info("Querying for additional page number {}", numPages);
+            tsResponse = searchByToken(query, tsResponse.getMeta().getNextToken());
+            tweetCohort.addAllFromSearchResponse(tsResponse);
+            numPages++;
+
+
+            if (tsResponse.getMeta() == null || tsResponse.getMeta().getNextToken() == null) {
+                hasMorePages = false;
+            }
+
+            if (numPages > 3) {
+                break;
+            }
+
+        }
+
+        tweetCohort.setTimeStampToNow();
+        return tweetCohort;
+    }
+
+
+
+
 
     public TweetSearchResponse searchByToken(String query, String token) {
 

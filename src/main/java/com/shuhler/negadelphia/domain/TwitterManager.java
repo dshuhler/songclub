@@ -43,41 +43,11 @@ public class TwitterManager {
         String eaglesContext = "context:12.689566314990436352";
         String excludeRetweets = "-is:retweet";
 
-        TweetCohort tweetCohort = new TweetCohort(UUID.randomUUID().toString());
-
 
         String query = eaglesContext + " " + excludeRetweets;
 
-        TweetSearchResponse tsResponse = twitterSearcher.standardRecentSearch(query);
+        TweetCohort tweetCohort = twitterSearcher.search(query, null);
 
-        tweetCohort.addAllFromSearchResponse(tsResponse);
-
-
-        boolean hasMorePages = true;
-        if (tsResponse.getMeta() == null || tsResponse.getMeta().getNextToken() == null) {
-            hasMorePages = false;
-        }
-
-        int numPages = 1;
-        while (hasMorePages) {
-            logger.info("Querying for additional page number {}", numPages);
-            tsResponse = twitterSearcher.searchByToken(query, tsResponse.getMeta().getNextToken());
-            tweetCohort.addAllFromSearchResponse(tsResponse);
-            numPages++;
-
-
-            if (tsResponse.getMeta() == null || tsResponse.getMeta().getNextToken() == null) {
-                hasMorePages = false;
-            }
-
-            if (numPages > 3) {
-                break;
-            }
-
-        }
-
-
-        tweetCohort.setTimeStampToNow();
         tweetCohortRepo.saveToYaml(tweetCohort);
     }
 
