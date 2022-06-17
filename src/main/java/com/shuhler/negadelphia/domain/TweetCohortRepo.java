@@ -33,7 +33,7 @@ public class TweetCohortRepo {
         mapper = new ObjectMapper(yamlFactory);
         mapper.findAndRegisterModules();
 
-        sortableMinuteFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH:mm")
+        sortableMinuteFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH:mm:ss")
                 .withZone(ZoneId.systemDefault());
     }
 

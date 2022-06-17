@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.time.Duration;
+import java.time.OffsetDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.UUID;
 
 @Component
@@ -44,9 +47,16 @@ public class TwitterManager {
         String excludeRetweets = "-is:retweet";
 
 
+
+        Duration oneMinute = Duration.ofMinutes(1);
+
         String query = eaglesContext + " " + excludeRetweets;
 
-        TweetCohort tweetCohort = twitterSearcher.search(query, null, 3);
+        OffsetDateTime now = OffsetDateTime.now();
+
+        OffsetDateTime startOfLastMinute = now.truncatedTo(ChronoUnit.MINUTES).minusMinutes(1);
+
+        TweetCohort tweetCohort = twitterSearcher.search(query, startOfLastMinute, 3);
 
         tweetCohortRepo.saveToYaml(tweetCohort);
     }

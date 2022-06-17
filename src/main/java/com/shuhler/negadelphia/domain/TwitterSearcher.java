@@ -7,6 +7,7 @@ import com.twitter.clientlib.model.TweetSearchResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.OffsetDateTime;
 import java.util.Set;
 import java.util.UUID;
 
@@ -26,10 +27,10 @@ public class TwitterSearcher {
         this.apiInstance = apiInstance;
     }
 
-    public TweetCohort search(String query, String sinceId, int maxPages) {
+    public TweetCohort search(String query, OffsetDateTime sinceTime, int maxPages) {
 
         // do initial query w/o token
-        TweetSearchResponse tsResponse = standardRecentSearch(query);
+        TweetSearchResponse tsResponse = standardRecentSearch(query, sinceTime);
 
         TweetCohort tweetCohort = new TweetCohort(UUID.randomUUID().toString());
         tweetCohort.addAllFromSearchResponse(tsResponse);
@@ -42,7 +43,7 @@ public class TwitterSearcher {
         int numPages = 1;
         while (hasMorePages) {
             logger.info("Querying for additional page number {}", numPages);
-            tsResponse = searchByToken(query, tsResponse.getMeta().getNextToken());
+            tsResponse = searchByToken(query, sinceTime, tsResponse.getMeta().getNextToken());
             tweetCohort.addAllFromSearchResponse(tsResponse);
             numPages++;
 
@@ -65,13 +66,13 @@ public class TwitterSearcher {
 
 
 
-    public TweetSearchResponse searchByToken(String query, String token) {
+    public TweetSearchResponse searchByToken(String query, OffsetDateTime sinceTime, String token) {
 
         // Note: the API has a "nextToken" and a "paginationToken" with the same exact description
         // You want to use nextToken. see: https://twittercommunity.com/t/why-does-timeline-use-pagination-token-while-search-uses-next-token/150963
 
         try {
-            return apiInstance.tweets().tweetsRecentSearch(query, null, null, null, null,
+            return apiInstance.tweets().tweetsRecentSearch(query, sinceTime, null, null, null,
                     MAX_RESULTS, null, token, null, expansions, tweetFields, userFields, null, null, null);
 
         } catch (ApiException e) {
@@ -80,11 +81,11 @@ public class TwitterSearcher {
         return null;
     }
 
-    public TweetSearchResponse standardRecentSearch(String query) {
+    public TweetSearchResponse standardRecentSearch(String query, OffsetDateTime sinceTime) {
 
 
         try {
-            return apiInstance.tweets().tweetsRecentSearch(query, null, null, null, null,
+            return apiInstance.tweets().tweetsRecentSearch(query, sinceTime, null, null, null,
                     MAX_RESULTS, null, null, null, expansions, tweetFields, userFields, null, null, null);
 
         } catch (ApiException e) {
