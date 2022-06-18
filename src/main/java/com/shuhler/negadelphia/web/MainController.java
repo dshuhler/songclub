@@ -1,7 +1,7 @@
 package com.shuhler.negadelphia.web;
 
 
-import com.shuhler.negadelphia.infra.JobRunner;
+import com.shuhler.negadelphia.domain.TwitterManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +16,11 @@ public class MainController {
 
     private Logger logger = LoggerFactory.getLogger(MainController.class);
 
-    private JobRunner jobRunner;
+    private TwitterManager twitterManager;
 
     @Autowired
-    public MainController(JobRunner jobRunner) {
-        this.jobRunner = jobRunner;
+    public MainController(TwitterManager twitterManager) {
+        this.twitterManager = twitterManager;
     }
 
     @Value("${profile.name}")
@@ -36,14 +36,14 @@ public class MainController {
     @PostMapping("/start")
     public String start(Model model) {
         logger.warn("Starting...");
-        jobRunner.doTestRun();
+        twitterManager.pollForEaglesTweets();
         return "index";
     }
 
     @PostMapping("/stop")
     public String stop(Model model) {
         logger.warn("Stopping...");
-        jobRunner.stopAll();
+        twitterManager.stopAll();
         return "index";
     }
 
