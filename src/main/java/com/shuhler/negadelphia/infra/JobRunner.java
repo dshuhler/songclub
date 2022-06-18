@@ -28,7 +28,7 @@ public class JobRunner {
         while (!allStop) {
             logger.warn("Doing a test run!" + Thread.currentThread().getName());
             try {
-                Thread.sleep(1000);
+                Thread.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
