@@ -18,26 +18,19 @@ public class TwitterManager {
 
     private Logger logger = LoggerFactory.getLogger(TwitterManager.class);
 
-    private TwitterProperties twitterProperties;
+
     private TweetCohortRepo tweetCohortRepo;
     private TwitterSearcher twitterSearcher;
 
     private boolean stopPolling = false;
-    private TwitterApi apiInstance = new TwitterApi();
+
 
     @Autowired
-    public TwitterManager(TwitterProperties twitterProperties, TweetCohortRepo tweetCohortRepo) {
-        this.twitterProperties = twitterProperties;
+    public TwitterManager(TweetCohortRepo tweetCohortRepo, TwitterSearcher twitterSearcher) {
         this.tweetCohortRepo = tweetCohortRepo;
+        this.twitterSearcher = twitterSearcher;
     }
 
-    @PostConstruct
-    private void initialize() {
-        TwitterCredentialsOAuth2 credentials = new TwitterCredentialsOAuth2(twitterProperties.getApikey(),
-                twitterProperties.getApisecret(), twitterProperties.getBearertoken(), null);
-        apiInstance.setTwitterCredentials(credentials);
-        twitterSearcher = new TwitterSearcher(apiInstance);
-    }
 
     @Async
     public void pollingTwitterSearch(String query) {
