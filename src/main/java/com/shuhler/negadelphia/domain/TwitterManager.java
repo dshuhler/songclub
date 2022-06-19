@@ -1,15 +1,12 @@
 package com.shuhler.negadelphia.domain;
 
 import com.shuhler.negadelphia.domain.twitter.TweetCohort;
-import com.twitter.clientlib.TwitterCredentialsOAuth2;
-import com.twitter.clientlib.api.TwitterApi;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.time.OffsetDateTime;
 import java.time.temporal.ChronoUnit;
 
