@@ -11,6 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import static com.shuhler.negadelphia.domain.twitter.SearchConstants.EAGLES_NO_RETWEETS;
+
 @Controller
 public class MainController {
 
@@ -35,14 +37,14 @@ public class MainController {
 
     @PostMapping("/start")
     public String start(Model model) {
-        logger.warn("Starting...");
-        twitterManager.pollForEaglesTweets();
+        logger.info("Starting...");
+        twitterManager.pollingTwitterSearch(EAGLES_NO_RETWEETS);
         return "index";
     }
 
     @PostMapping("/stop")
     public String stop(Model model) {
-        logger.warn("Stopping...");
+        logger.info("Stopping...");
         twitterManager.stopAll();
         return "index";
     }

@@ -40,12 +40,9 @@ public class TwitterManager {
     }
 
     @Async
-    public void pollForEaglesTweets() {
+    public void pollingTwitterSearch(String query) {
 
         stopPolling = false;
-        String eaglesContext = "context:12.689566314990436352";
-        String excludeRetweets = "-is:retweet";
-        String query = eaglesContext + " " + excludeRetweets;
 
         while (!stopPolling) {
 
@@ -59,7 +56,7 @@ public class TwitterManager {
 
             try {
                 logger.info("Waiting to poll...");
-                Thread.sleep(100 * 60);
+                Thread.sleep(1000 * 60);
             } catch (InterruptedException e) {
                 logger.info("Poll thread interupted");
                 break;
@@ -68,6 +65,8 @@ public class TwitterManager {
 
         logger.info("Polling thread stopped");
     }
+
+
 
     public void stopAll() {
         stopPolling = true;
