@@ -58,6 +58,10 @@ public class TweetData {
     }
 
     public String getCreatedAt() {
-        return DateTimeFormatter.ofPattern("yyyy-MM-dd_HH:mm:ss").format(createdAt);
+        return DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(createdAt);
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = OffsetDateTime.parse(createdAt, DateTimeFormatter.ISO_OFFSET_DATE_TIME);
     }
 }

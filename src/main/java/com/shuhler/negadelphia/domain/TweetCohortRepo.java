@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
@@ -22,6 +23,8 @@ public class TweetCohortRepo {
     private Logger logger = LoggerFactory.getLogger(TweetCohortRepo.class);
     private ObjectMapper mapper;
     private DateTimeFormatter sortableMinuteFormatter;
+
+    private final String outputPath = "src/test/resources/testoutput/";
 
     @PostConstruct
     private void init() {
@@ -53,7 +56,19 @@ public class TweetCohortRepo {
 
     }
 
+    public TweetCohort loadFromYaml(String path) {
 
+        File yamlFile = new File(path);
+
+        try {
+            TweetCohort readCohort = mapper.readValue(yamlFile, TweetCohort.class);
+            return readCohort;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+
+    }
 
 
 

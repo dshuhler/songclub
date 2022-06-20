@@ -19,6 +19,9 @@ public class TweetCohort {
         this.id = id;
     }
 
+    public TweetCohort() {
+    }
+
     public void addTweet(Tweet tweet) {
         tweetDataList.add(new TweetData(tweet));
     }
@@ -36,6 +39,18 @@ public class TweetCohort {
 
     public void setTimeStampToNow() {
         timeStamp = Instant.now();
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setTimeStamp(Instant timeStamp) {
+        this.timeStamp = timeStamp;
+    }
+
+    public void setTweetDataList(List<TweetData> tweetDataList) {
+        this.tweetDataList = tweetDataList;
     }
 
     public String getId() {
