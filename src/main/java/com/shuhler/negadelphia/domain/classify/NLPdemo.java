@@ -1,4 +1,4 @@
-package com.shuhler.negadelphia.domain.classifier;
+package com.shuhler.negadelphia.domain.classify;
 
 import edu.stanford.nlp.coref.data.CorefChain;
 import edu.stanford.nlp.ie.util.RelationTriple;

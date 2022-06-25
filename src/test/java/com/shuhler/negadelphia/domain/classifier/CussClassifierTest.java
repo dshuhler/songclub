@@ -1,6 +1,6 @@
 package com.shuhler.negadelphia.domain.classifier;
 
-import net.bytebuddy.build.ToStringPlugin;
+import com.shuhler.negadelphia.domain.classify.CussClassifier;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

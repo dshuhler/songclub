@@ -1,7 +1,7 @@
 package com.shuhler.negadelphia.web;
 
 
-import com.shuhler.negadelphia.domain.TwitterManager;
+import com.shuhler.negadelphia.domain.ingest.api.TwitterManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import static com.shuhler.negadelphia.domain.twitter.SearchConstants.EAGLES_NO_RETWEETS;
+import static com.shuhler.negadelphia.domain.ingest.api.SearchConstants.EAGLES_NO_RETWEETS;
 
 @Controller
 public class MainController {

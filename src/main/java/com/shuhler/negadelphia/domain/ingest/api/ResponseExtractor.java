@@ -1,5 +1,6 @@
-package com.shuhler.negadelphia.domain.twitter;
+package com.shuhler.negadelphia.domain.ingest.api;
 
+import com.shuhler.negadelphia.domain.ingest.TweetData;
 import com.twitter.clientlib.model.TweetSearchResponse;
 import com.twitter.clientlib.model.User;
 import org.slf4j.Logger;

@@ -1,4 +1,4 @@
-package com.shuhler.negadelphia.domain.classifier;
+package com.shuhler.negadelphia.domain.classify;
 
 import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableSet;

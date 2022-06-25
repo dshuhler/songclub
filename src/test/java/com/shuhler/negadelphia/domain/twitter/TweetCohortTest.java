@@ -1,5 +1,7 @@
 package com.shuhler.negadelphia.domain.twitter;
 
+import com.shuhler.negadelphia.domain.ingest.TweetCohort;
+import com.shuhler.negadelphia.domain.ingest.TweetData;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

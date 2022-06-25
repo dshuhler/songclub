@@ -1,6 +1,6 @@
-package com.shuhler.negadelphia.domain;
+package com.shuhler.negadelphia.domain.ingest.api;
 
-import com.shuhler.negadelphia.domain.twitter.TweetCohort;
+import com.shuhler.negadelphia.domain.ingest.TweetCohort;
 import com.twitter.clientlib.ApiException;
 import com.twitter.clientlib.TwitterCredentialsOAuth2;
 import com.twitter.clientlib.api.TwitterApi;

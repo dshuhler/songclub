@@ -1,4 +1,4 @@
-package com.shuhler.negadelphia.domain.twitter;
+package com.shuhler.negadelphia.domain.ingest.api;
 
 public class SearchConstants {
 

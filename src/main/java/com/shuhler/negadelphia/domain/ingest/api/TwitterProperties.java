@@ -1,4 +1,4 @@
-package com.shuhler.negadelphia.domain;
+package com.shuhler.negadelphia.domain.ingest.api;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;

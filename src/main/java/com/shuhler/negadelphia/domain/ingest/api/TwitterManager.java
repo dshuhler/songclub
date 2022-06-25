@@ -1,6 +1,7 @@
-package com.shuhler.negadelphia.domain;
+package com.shuhler.negadelphia.domain.ingest.api;
 
-import com.shuhler.negadelphia.domain.twitter.TweetCohort;
+import com.shuhler.negadelphia.domain.ingest.TweetCohort;
+import com.shuhler.negadelphia.domain.ingest.TweetCohortRepo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

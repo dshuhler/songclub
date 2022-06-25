@@ -1,6 +1,7 @@
 package com.shuhler.negadelphia.domain;
 
-import com.shuhler.negadelphia.domain.twitter.TweetCohort;
+import com.shuhler.negadelphia.domain.ingest.TweetCohort;
+import com.shuhler.negadelphia.domain.ingest.TweetCohortRepo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

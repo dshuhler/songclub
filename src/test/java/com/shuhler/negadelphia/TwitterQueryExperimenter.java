@@ -1,9 +1,8 @@
 package com.shuhler.negadelphia;
 
-import com.shuhler.negadelphia.domain.TweetCohortRepo;
-import com.shuhler.negadelphia.domain.TwitterManager;
-import com.shuhler.negadelphia.domain.TwitterSearcher;
-import com.shuhler.negadelphia.domain.twitter.TweetCohort;
+import com.shuhler.negadelphia.domain.ingest.TweetCohortRepo;
+import com.shuhler.negadelphia.domain.ingest.api.TwitterSearcher;
+import com.shuhler.negadelphia.domain.ingest.TweetCohort;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,7 +11,7 @@ import org.springframework.test.context.ActiveProfiles;
 import java.time.OffsetDateTime;
 import java.time.temporal.ChronoUnit;
 
-import static com.shuhler.negadelphia.domain.twitter.SearchConstants.EAGLES_NO_RETWEETS;
+import static com.shuhler.negadelphia.domain.ingest.api.SearchConstants.EAGLES_NO_RETWEETS;
 
 
 /**
