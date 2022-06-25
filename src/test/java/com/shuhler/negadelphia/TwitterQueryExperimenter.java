@@ -35,7 +35,7 @@ public class TwitterQueryExperimenter {
 
         TweetCohort tweetCohort = twitterSearcher.search(EAGLES_NO_RETWEETS, ago, 3);
 
-        tweetCohortRepo.saveToYaml(tweetCohort);
+        tweetCohortRepo.saveToYaml(tweetCohort, "EXPIRIMENTER");
 
     }
 

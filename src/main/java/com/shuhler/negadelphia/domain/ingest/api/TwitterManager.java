@@ -1,5 +1,6 @@
 package com.shuhler.negadelphia.domain.ingest.api;
 
+import com.shuhler.negadelphia.domain.ingest.NegaQuery;
 import com.shuhler.negadelphia.domain.ingest.TweetCohort;
 import com.shuhler.negadelphia.domain.ingest.TweetCohortRepo;
 import org.slf4j.Logger;
@@ -31,19 +32,17 @@ public class TwitterManager {
 
 
     @Async
-    public void pollingTwitterSearch(String query) {
+    public void pollingTwitterSearch(NegaQuery negaQuery) {
 
         stopPolling = false;
 
         while (!stopPolling) {
-
-            OffsetDateTime now = OffsetDateTime.now();
-            OffsetDateTime startOfLastMinute = now.truncatedTo(ChronoUnit.MINUTES).minusMinutes(1);
+            OffsetDateTime startOfLastMinute = startOfMinutesAgo(1);
 
             logger.info("Polling at {}", startOfLastMinute);
-            TweetCohort tweetCohort = twitterSearcher.search(query, startOfLastMinute, 3);
+            TweetCohort tweetCohort = twitterSearcher.search(negaQuery.getQuery(), startOfLastMinute, 3);
 
-            tweetCohortRepo.saveToYaml(tweetCohort);
+            tweetCohortRepo.saveToYaml(tweetCohort, negaQuery.getOutputFolderName());
 
             try {
                 logger.info("Waiting to poll...");
@@ -61,6 +60,10 @@ public class TwitterManager {
 
     public void stopAll() {
         stopPolling = true;
+    }
+
+    private OffsetDateTime startOfMinutesAgo(int minutes) {
+        return OffsetDateTime.now().truncatedTo(ChronoUnit.MINUTES).minusMinutes(minutes);
     }
 
 }

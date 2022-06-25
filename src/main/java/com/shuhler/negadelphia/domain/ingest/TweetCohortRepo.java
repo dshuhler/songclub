@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
@@ -39,13 +41,18 @@ public class TweetCohortRepo {
     }
 
 
-    public void saveToYaml(TweetCohort tweetCohort) {
+    public void saveToYaml(TweetCohort tweetCohort, String outputFolderName) {
 
         String fileName = sortableMinuteFormatter.format(tweetCohort.getTimeStamp()) + ".yaml";
-        String path = "src/test/resources/testoutput/" + fileName;
+        String path = "src/test/resources/testoutput/" + outputFolderName;
+        String filepath = path + "/" + fileName;
+
 
         try {
-            mapper.writeValue(new File(path), tweetCohort);
+
+            Files.createDirectories(Paths.get(path));
+
+            mapper.writeValue(new File(filepath), tweetCohort);
             logger.info("Wrote {} tweets to {}", tweetCohort.numTweets(), path);
         } catch (IOException e) {
             logger.error("Error writing to YAML file");
@@ -67,7 +74,6 @@ public class TweetCohortRepo {
 
 
     }
-
 
 
 

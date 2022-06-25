@@ -1,6 +1,7 @@
 package com.shuhler.negadelphia.web;
 
 
+import com.shuhler.negadelphia.domain.ingest.NegaQuery;
 import com.shuhler.negadelphia.domain.ingest.api.TwitterManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,7 +39,11 @@ public class MainController {
     @PostMapping("/start")
     public String start(Model model) {
         logger.info("Starting...");
-        twitterManager.pollingTwitterSearch(EAGLES_NO_RETWEETS);
+
+        NegaQuery negaQuery = new NegaQuery("EAGLES_CONTEXT");
+        negaQuery.setQuery(NegaQuery.EAGLES_NO_RETWEETS);
+
+        twitterManager.pollingTwitterSearch(negaQuery);
         return "index";
     }
 
